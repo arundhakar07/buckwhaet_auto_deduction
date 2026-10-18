@@ -47,7 +47,7 @@ fun AutoTrackSettings() {
     }
 
     ButtonRow(
-        icon = painterResource(R.drawable.ic_app_icon),
+        icon = painterResource(R.drawable.ic_money),
         text = "Auto-track Bank SMS",
         onClick = {
             if (!hasSmsPermission) {
