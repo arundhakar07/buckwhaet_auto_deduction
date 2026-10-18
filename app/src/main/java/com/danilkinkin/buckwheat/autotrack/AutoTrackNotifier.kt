@@ -1,3 +1,6 @@
+/*
+ * Copyright 2022, Danil Zakhvatkin (Danilkinkin), All rights reserved.
+ */
 package com.danilkinkin.buckwheat.autotrack
 
 import android.app.NotificationChannel
@@ -56,7 +59,7 @@ object AutoTrackNotifier {
         }
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_launcher_monochrome)
             .setContentTitle(title)
             .setContentText(body)
             .setStyle(NotificationCompat.BigTextStyle().bigText("$body\n\nOriginal: \"${parsed.rawText}\""))

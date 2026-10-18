@@ -1,3 +1,6 @@
+/*
+ * Copyright 2022, Danil Zakhvatkin (Danilkinkin), All rights reserved.
+ */
 package com.danilkinkin.buckwheat.autotrack
 
 import android.app.Notification
@@ -8,6 +11,7 @@ import com.danilkinkin.buckwheat.data.entities.Transaction
 import com.danilkinkin.buckwheat.data.entities.TransactionType
 import com.danilkinkin.buckwheat.widget.extend.ExtendWidgetReceiver
 import com.danilkinkin.buckwheat.widget.minimal.MinimalWidgetReceiver
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +21,7 @@ import java.math.BigDecimal
 import java.util.Date
 import java.util.concurrent.ConcurrentHashMap
 
+@AndroidEntryPoint
 class TransactionNotificationListener : NotificationListenerService() {
 
     companion object {

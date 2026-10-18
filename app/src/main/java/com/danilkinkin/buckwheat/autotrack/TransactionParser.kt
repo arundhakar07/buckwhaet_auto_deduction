@@ -1,3 +1,6 @@
+/*
+ * Copyright 2022, Danil Zakhvatkin (Danilkinkin), All rights reserved.
+ */
 package com.danilkinkin.buckwheat.autotrack
 
 import com.danilkinkin.buckwheat.data.entities.TransactionType

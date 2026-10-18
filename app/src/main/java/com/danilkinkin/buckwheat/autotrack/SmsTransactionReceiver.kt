@@ -1,3 +1,6 @@
+/*
+ * Copyright 2022, Danil Zakhvatkin (Danilkinkin), All rights reserved.
+ */
 package com.danilkinkin.buckwheat.autotrack
 
 import android.content.BroadcastReceiver
@@ -12,6 +15,7 @@ import com.danilkinkin.buckwheat.widget.extend.ExtendWidgetReceiver
 import com.danilkinkin.buckwheat.widget.minimal.MinimalWidgetReceiver
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
@@ -19,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.Date
+import javax.inject.Inject
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)
@@ -26,7 +31,11 @@ interface AutoTrackEntryPoint {
     fun spendsRepository(): SpendsRepository
 }
 
+@AndroidEntryPoint
 class SmsTransactionReceiver : BroadcastReceiver() {
+
+    @Inject
+    lateinit var injectedRepository: SpendsRepository
 
     companion object {
         private const val TAG = "SmsTransactionReceiver"

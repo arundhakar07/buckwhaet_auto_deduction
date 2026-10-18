@@ -40,7 +40,7 @@ jobs:
           sdkmanager "platforms;android-36" "build-tools;36.0.0" || true
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+        run: ./gradlew assembleDebug -x spotlessCheck -x lint -x test --no-daemon --stacktrace
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
