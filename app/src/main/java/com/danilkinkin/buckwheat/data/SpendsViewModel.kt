@@ -1,3 +1,6 @@
+/*
+ * Copyright 2022, Danil Zakhvatkin (Danilkinkin), All rights reserved.
+ */
 package com.danilkinkin.buckwheat.data
 
 import androidx.lifecycle.LiveData
@@ -88,6 +91,12 @@ class SpendsViewModel @Inject constructor(
     }
 
     // Spend handling
+
+    fun addIncome(transactionForAdd: Transaction) {
+        viewModelScope.launch {
+            spendsRepository.addIncome(transactionForAdd)
+        }
+    }
 
     fun addSpent(transactionForAdd: Transaction) {
         viewModelScope.launch {

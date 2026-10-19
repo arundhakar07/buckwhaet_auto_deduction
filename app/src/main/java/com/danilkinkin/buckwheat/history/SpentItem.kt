@@ -1,3 +1,6 @@
+/*
+ * Copyright 2022, Danil Zakhvatkin (Danilkinkin), All rights reserved.
+ */
 package com.danilkinkin.buckwheat.history
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -21,6 +24,11 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
 
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
+import androidx.compose.ui.graphics.Color
+import com.danilkinkin.buckwheat.ui.isNightMode
+
 @Composable
 fun SpentItem(
     transaction: Transaction,
@@ -28,22 +36,43 @@ fun SpentItem(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+    val isIncome = transaction.type == TransactionType.INCOME
+    val isNight = isNightMode()
+    val incomeColor = if (isNight) Color(0xFF81C784) else Color(0xFF2E7D32)
+    val amountColor = if (isIncome) incomeColor else colorOnEditor
+
     Column(Modifier.padding(bottom = 14.dp)) {
-        Row(modifier.fillMaxWidth()) {
+        Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Column(
                 Modifier
-                    .padding( start = 32.dp, top = 14.dp)
+                    .padding(start = 32.dp, top = 14.dp)
                     .weight(1f)
             ) {
-                Text(
-                    text = numberFormat(context = context, transaction.value, currency = currency),
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontSize = MaterialTheme.typography.headlineMedium.fontSize,
-                    color = colorOnEditor,
-                    softWrap = false,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier,
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = (if (isIncome) "+ " else "") + numberFormat(context = context, transaction.value, currency = currency),
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                        color = amountColor,
+                        softWrap = false,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier,
+                    )
+                    if (isIncome) {
+                        Spacer(Modifier.width(8.dp))
+                        Surface(
+                            shape = RoundedCornerShape(6.dp),
+                            color = incomeColor.copy(alpha = 0.15f),
+                        ) {
+                            Text(
+                                text = "Earned",
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = incomeColor,
+                            )
+                        }
+                    }
+                }
             }
             Box {
                 Text(
@@ -63,7 +92,7 @@ fun SpentItem(
         }
         if (transaction.comment.isNotEmpty()) {
             Text(
-                modifier = Modifier.padding( horizontal = 32.dp),
+                modifier = Modifier.padding(horizontal = 32.dp),
                 text = transaction.comment,
                 style = MaterialTheme.typography.bodyMedium,
                 color = colorOnEditor.copy(alpha = 0.7f),

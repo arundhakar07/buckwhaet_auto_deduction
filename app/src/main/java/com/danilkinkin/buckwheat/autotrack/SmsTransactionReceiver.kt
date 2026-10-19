@@ -65,19 +65,16 @@ class SmsTransactionReceiver : BroadcastReceiver() {
                 )
                 val repository = entryPoint.spendsRepository()
 
+                val transaction = Transaction(
+                    type = parsed.type,
+                    value = parsed.amount,
+                    date = Date(),
+                    comment = parsed.merchant
+                )
                 if (parsed.type == TransactionType.SPENT) {
-                    val transaction = Transaction(
-                        type = TransactionType.SPENT,
-                        value = parsed.amount,
-                        date = Date(),
-                        comment = parsed.merchant
-                    )
                     repository.addSpent(transaction)
                 } else if (parsed.type == TransactionType.INCOME) {
-                    // When money is credited, add to current overall budget
-                    val currentBudget = repository.getBudget().first()
-                    val finishDate = repository.getFinishPeriodDate().first() ?: Date()
-                    repository.changeBudget(currentBudget + parsed.amount, finishDate)
+                    repository.addIncome(transaction)
                 }
 
                 // Update widgets immediately
